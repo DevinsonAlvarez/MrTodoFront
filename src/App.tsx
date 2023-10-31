@@ -1,11 +1,12 @@
-import { Button } from "flowbite-react";
+import { DarkThemeToggle, Flowbite } from "flowbite-react";
+
+import Navbar from "./components/Navbar";
 
 function App() {
   return (
-    <>
-      <h1>Hola Mundo</h1>
-      <Button>hola</Button>
-    </>
+    <Flowbite>
+      <Navbar />
+    </Flowbite>
   );
 }
 

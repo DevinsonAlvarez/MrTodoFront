@@ -3,5 +3,9 @@
 @tailwind utilities;
 
 body {
-  @apply bg-neutral-100 dark:bg-neutral-900;
+  @apply bg-neutral-100 dark:bg-gray-900;
+}
+
+#app {
+  @apply relative flex min-h-screen w-full items-center justify-center;
 }
