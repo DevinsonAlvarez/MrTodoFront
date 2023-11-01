@@ -5,15 +5,17 @@ import {
 } from "flowbite-react";
 import { Dispatch, SetStateAction } from "react";
 
-import { User } from "../contracts/MrTodoService";
+import { JWT, User } from "../contracts/MrTodoService";
 
 interface Props {
   user: User;
   setUser: Dispatch<SetStateAction<User | null>>;
+  jwt?: JWT;
+  setJwt: Dispatch<SetStateAction<JWT | null>>;
 }
 
 const ProfileButton = (
-  <div className="rounded-lg p-2.5 text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 max-md:hidden">
+  <div className="rounded-lg p-2.5 text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700">
     <svg
       className="h-6 w-6 text-gray-500 dark:text-gray-400"
       aria-hidden="true"
@@ -26,24 +28,20 @@ const ProfileButton = (
   </div>
 );
 
-function Navbar({ user, setUser }: Props) {
+function Navbar({ user, setUser, setJwt }: Props) {
   return (
-    <Navigation fluid className="fixed left-0 top-0 z-50 w-full">
+    <Navigation
+      fluid
+      className="fixed left-0 top-0 z-50 w-full border-b border-gray-200 dark:border-gray-700"
+    >
+      <Navigation.Toggle />
       <Navigation.Brand href="#">
         <h3 className="self-center whitespace-nowrap text-xl font-semibold">
           Mr. Todo
         </h3>
       </Navigation.Brand>
-      <DarkThemeToggle className="md:hidden" />
-      <Navigation.Toggle />
-      <Navigation.Collapse>
-        {/* <Navigation.Link href="#">Home</Navigation.Link>
-        <Navigation.Link href="#">About</Navigation.Link>
-        <Navigation.Link href="#">Services</Navigation.Link>
-        <Navigation.Link href="#">Pricing</Navigation.Link>
-        <Navigation.Link href="#">Contact</Navigation.Link> */}
-      </Navigation.Collapse>
       <div className="flex gap-2">
+        <DarkThemeToggle />
         <Dropdown arrowIcon={false} inline label={ProfileButton}>
           <Dropdown.Header>
             <span className="block text-sm">{user.username}</span>
@@ -51,9 +49,15 @@ function Navbar({ user, setUser }: Props) {
               {user.email}
             </span>
           </Dropdown.Header>
-          <Dropdown.Item onClick={() => setUser(null)}>Log out</Dropdown.Item>
+          <Dropdown.Item
+            onClick={() => {
+              setUser(null);
+              setJwt(null);
+            }}
+          >
+            Log out
+          </Dropdown.Item>
         </Dropdown>
-        <DarkThemeToggle className="max-md:hidden" />
       </div>
     </Navigation>
   );

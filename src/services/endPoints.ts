@@ -11,4 +11,10 @@ export default [
     path: "/api/auth/local/register",
     method: "POST",
   },
+  {
+    name: "getUserTodos",
+    url: "http://localhost:1337/api/todos/me",
+    path: "/api/todos/me",
+    method: "GET",
+  },
 ];

@@ -5,10 +5,11 @@ import AddTodo from "./components/AddTodo";
 import Login from "./components/Login";
 import Navbar from "./components/Navbar";
 import TodoList from "./components/TodoList";
-import { User } from "./contracts/MrTodoService";
+import { JWT, User } from "./contracts/MrTodoService";
 
 function App() {
   const [user, setUser] = useState<User | null>(null);
+  const [jwt, setJwt] = useState<JWT | null>(localStorage.getItem("jwt"));
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -20,13 +21,13 @@ function App() {
     <Flowbite>
       {user !== null ? (
         <>
-          <Navbar user={user} setUser={setUser} />
+          <Navbar user={user} setUser={setUser} setJwt={setJwt} />
           <div className="mx-auto mt-5 grid h-full min-h-[calc(100vh-84px)] max-w-6xl grid-cols-8 gap-4">
             <section className="relative col-span-3">
               <AddTodo />
             </section>
             <main className="col-span-5">
-              <TodoList />
+              <TodoList jwt={jwt} />
             </main>
           </div>
           <footer className="w-full">

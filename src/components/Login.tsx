@@ -7,7 +7,7 @@ import {
 } from "flowbite-react";
 import { Dispatch, FormEvent, SetStateAction, useState } from "react";
 
-import { User } from "../contracts/MrTodoService";
+import { ErrorResponse, User } from "../contracts/MrTodoService";
 import MrTodoService from "../services/MrTodoService";
 
 interface Props {
@@ -17,39 +17,25 @@ interface Props {
 function Login({ setUser }: Props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState<{
-    message: string;
-    name: string;
-    status: number | null;
-  }>({
-    message: "",
-    name: "",
-    status: null,
-  });
+  const [error, setError] = useState<ErrorResponse | null>(null);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const res = await MrTodoService.singIn(email, password);
 
-    if (res.ok) {
-      const { jwt, user }: { jwt: string; user: User } = await res.json();
+    if ("user" in res) {
+      localStorage.setItem("user", JSON.stringify(res.user));
+      localStorage.setItem("jwt", res.jwt);
 
-      localStorage.setItem("user", JSON.stringify(user));
-      localStorage.setItem("jwt", jwt);
-
-      setUser(user);
+      setUser(res.user);
     } else {
-      const { error } = await res.json();
-
       setUser(null);
       setError({
-        message: error.message,
-        name: error.name,
-        status: error.status,
+        message: res.message,
+        name: res.name,
+        status: res.status,
       });
-
-      console.log(error);
     }
   };
 
@@ -84,7 +70,9 @@ function Login({ setUser }: Props) {
                 required
               />
             </div>
-            <span className="font-medium text-red-500">{error.message}</span>
+            {error && (
+              <span className="font-medium text-red-500">{error.message}</span>
+            )}
             <Button type="submit">Submit</Button>
           </form>
         </Card>
