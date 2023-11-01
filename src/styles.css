@@ -3,9 +3,18 @@
 @tailwind utilities;
 
 body {
-  @apply bg-neutral-100 dark:bg-gray-900;
+  @apply bg-neutral-100 text-gray-700 dark:bg-gray-900 dark:text-gray-400;
 }
 
 #app {
-  @apply relative flex min-h-screen w-full items-center justify-center;
+  @apply relative min-h-screen w-full pt-[65px];
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @apply text-gray-900 dark:text-white;
 }
