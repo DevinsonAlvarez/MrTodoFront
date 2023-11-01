@@ -1,19 +1,23 @@
 import { Badge, Table } from "flowbite-react";
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect } from "react";
 
 import { CollectionPaginated, JWT, Todo } from "../contracts/MrTodoService";
 import MrTodoService from "../services/MrTodoService";
 
-function TodoList({ jwt }: { jwt: JWT | null }) {
-  const [todos, setTodos] = useState<CollectionPaginated<Todo> | object>({});
+interface Props {
+  jwt: JWT | null;
+  todos: CollectionPaginated<Todo> | object;
+  setTodos: Dispatch<SetStateAction<object | CollectionPaginated<Todo>>>;
+}
 
+function TodoList({ jwt, todos, setTodos }: Props) {
   useEffect(() => {
     if (jwt) {
       MrTodoService.getTodos(jwt).then((res) => {
         "data" in res ? setTodos(res) : console.log(res);
       });
     }
-  }, [jwt]);
+  }, [jwt, setTodos]);
 
   return (
     <Table>

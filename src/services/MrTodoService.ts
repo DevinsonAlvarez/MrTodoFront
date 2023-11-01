@@ -1,4 +1,5 @@
 import {
+  AddTodoRequest,
   CollectionPaginated,
   EndPoint,
   ErrorResponse,
@@ -63,6 +64,29 @@ export default class MrTodoService {
     if (!res.ok) return (await res.json()).error;
 
     return res.json();
+  }
+
+  /**
+   * Insert new task.
+   */
+  public static async addTodo(
+    jwt: JWT,
+    data: AddTodoRequest,
+  ): Promise<Todo | ErrorResponse> {
+    const endPoint = this.getEndpoint("addTodo")!;
+
+    const res = await fetch(endPoint.url, {
+      method: endPoint.method,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + jwt,
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!res.ok) return (await res.json()).error;
+
+    return (await res.json()).data;
   }
 
   private static getEndpoint(name: string) {

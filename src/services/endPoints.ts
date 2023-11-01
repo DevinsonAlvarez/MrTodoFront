@@ -17,4 +17,10 @@ export default [
     path: "/api/todos/me",
     method: "GET",
   },
+  {
+    name: "addTodo",
+    url: "http://localhost:1337/api/todos",
+    path: "/api/todos",
+    method: "POST",
+  },
 ];

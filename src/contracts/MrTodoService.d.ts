@@ -85,3 +85,12 @@ export interface CollectionPaginated<TData> {
     pagination: Pagination;
   };
 }
+
+interface AddTodoRequest {
+  data: {
+    name: string;
+    description?: string;
+    /** User id */
+    user: number;
+  };
+}
