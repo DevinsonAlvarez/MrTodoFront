@@ -1,19 +1,26 @@
 import { Flowbite } from "flowbite-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import AddTodo from "./components/AddTodo";
 import Login from "./components/Login";
 import Navbar from "./components/Navbar";
 import TodoList from "./components/TodoList";
+import { User } from "./contracts/MrTodoService";
 
 function App() {
-  const [isAuth, setIsAuth] = useState(localStorage.getItem("user") !== null);
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+
+    storedUser ? setUser(JSON.parse(storedUser)) : setUser(null);
+  }, []);
 
   return (
     <Flowbite>
-      {isAuth ? (
+      {user !== null ? (
         <>
-          <Navbar />
+          <Navbar user={user} setUser={setUser} />
           <div className="mx-auto mt-5 grid h-full min-h-[calc(100vh-84px)] max-w-6xl grid-cols-8 gap-4">
             <section className="relative col-span-3">
               <AddTodo />
@@ -30,7 +37,7 @@ function App() {
           </footer>
         </>
       ) : (
-        <Login setIsAuth={setIsAuth} />
+        <Login setUser={setUser} />
       )}
     </Flowbite>
   );

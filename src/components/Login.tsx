@@ -11,10 +11,10 @@ import { User } from "../contracts/MrTodoService";
 import MrTodoService from "../services/MrTodoService";
 
 interface Props {
-  setIsAuth: Dispatch<SetStateAction<boolean>>;
+  setUser: Dispatch<SetStateAction<User | null>>;
 }
 
-function Login({ setIsAuth }: Props) {
+function Login({ setUser }: Props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<{
@@ -38,11 +38,11 @@ function Login({ setIsAuth }: Props) {
       localStorage.setItem("user", JSON.stringify(user));
       localStorage.setItem("jwt", jwt);
 
-      setIsAuth(true);
+      setUser(user);
     } else {
       const { error } = await res.json();
 
-      setIsAuth(false);
+      setUser(null);
       setError({
         message: error.message,
         name: error.name,
