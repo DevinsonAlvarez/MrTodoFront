@@ -5,18 +5,8 @@ export interface DynamicKey {
 export type EndPoint = {
   /** Name of the route */
   name: string;
-  /**
-   * Full url.
-   *
-   * Example: https://developer.mozilla.org/docs/Web/API/fetch
-   */
+  /** Full url. */
   url: string;
-  /**
-   * Relative path
-   *
-   * Example: /docs/Web/API/fetch
-   */
-  path: string;
   /** EndPoint method */
   method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 };

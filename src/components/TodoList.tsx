@@ -19,6 +19,10 @@ function TodoList({ jwt, todos, setTodos }: Props) {
     }
   }, [jwt, setTodos]);
 
+  const handleDelete = async (jwt: JWT, todoId: number) => {
+    await MrTodoService.removeTodo(jwt, todoId);
+  };
+
   return (
     <Table>
       <Table.Head>
@@ -50,7 +54,15 @@ function TodoList({ jwt, todos, setTodos }: Props) {
                   dateStyle: "short",
                 })}
               </Table.Cell>
-              <Table.Cell>Edit</Table.Cell>
+              <Table.Cell>
+                <button
+                  className="text-red-500 hover:underline"
+                  type="button"
+                  onClick={() => handleDelete(jwt!, todo.id)}
+                >
+                  delete
+                </button>
+              </Table.Cell>
             </Table.Row>
           ))
         ) : (

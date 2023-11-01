@@ -1,26 +1,29 @@
+const baseUrl = "http://localhost:1337/api";
+
 export default [
   {
     name: "login",
-    url: "http://localhost:1337/api/auth/local",
-    path: "/api/auth/local",
+    url: baseUrl + "/auth/local",
     method: "POST",
   },
   {
     name: "register",
-    url: "http://localhost:1337/api/auth/local/register",
-    path: "/api/auth/local/register",
+    url: baseUrl + "/auth/local/register",
     method: "POST",
   },
   {
     name: "getUserTodos",
-    url: "http://localhost:1337/api/todos/me",
-    path: "/api/todos/me",
+    url: baseUrl + "/todos/me",
     method: "GET",
   },
   {
     name: "addTodo",
-    url: "http://localhost:1337/api/todos",
-    path: "/api/todos",
+    url: baseUrl + "/todos",
     method: "POST",
+  },
+  {
+    name: "removeTodo",
+    url: baseUrl + "/todos/:id",
+    method: "DELETE",
   },
 ];

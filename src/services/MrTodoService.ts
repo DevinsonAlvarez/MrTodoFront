@@ -89,7 +89,38 @@ export default class MrTodoService {
     return (await res.json()).data;
   }
 
-  private static getEndpoint(name: string) {
-    return this.endpoints.find((endPoint) => endPoint.name === name);
+  public static async removeTodo(jwt: JWT, todoId: number) {
+    const endPoint = this.getEndpoint("removeTodo", [
+      ["id", todoId.toString()],
+    ]);
+
+    console.log(endPoint?.url);
+  }
+
+  private static getEndpoint(name: string, params?: Array<[string, string]>) {
+    const endPoint = this.endpoints.find((endPoint) => endPoint.name === name);
+
+    if (!endPoint) return null;
+
+    if (params) {
+      endPoint.url = this.replaceUrlParam(endPoint.url, params);
+    }
+
+    return endPoint;
+  }
+
+  private static replaceUrlParam(url: string, params: Array<[string, string]>) {
+    let a = "";
+
+    // params.forEach((param) => {
+    //   a = url.replace(`:${param[0]}`, param[1]);
+    // });
+
+    // console.log(params[0][1]);
+    // console.log(url);
+
+    a = url.replace(`:${params[0][0]}`, params[0][1]);
+
+    return a;
   }
 }
